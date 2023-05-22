@@ -3,11 +3,17 @@
     background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
 
     .login-container {
-        width: 400px;
-        height: 100%;
-        margin: 0 auto;
+        width: 300px;
         background: white;
         border-radius: 15px;
+        position: absolute;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 450px;
+
 
         .login-content {
             padding: 15px;

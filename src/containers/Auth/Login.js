@@ -11,7 +11,22 @@ import { FormattedMessage } from 'react-intl';
 class Login extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            userName: '',
+            passWord: '',
+        }
+    }
 
+    handleOnChangeUserName = (event) => {
+        this.setState({ userName: event.target.value });
+    }
+
+    handleOnChangePW = (event) => {
+        this.setState({ passWord: event.target.value });
+    }
+
+    handleClickLogin = () => {
+        console.log('UserName : ', this.state.userName, ' PW : ', this.state.passWord)
     }
 
     render() {
@@ -22,14 +37,30 @@ class Login extends Component {
                         <div className='col-12 text-login'>Login</div>
                         <div className='col-12 form-group'>
                             <label>User Name :</label>
-                            <input type='text' className='form-control login-input' placeholder='Enter your Name' />
+                            <input
+                                type='text'
+                                className='form-control login-input'
+                                placeholder='Enter your Name'
+                                value={this.state.userName}
+                                onChange={(event) => this.handleOnChangeUserName(event)}
+                            />
                         </div>
                         <div className='col-12 form-group'>
                             <label>Password :</label>
-                            <input type='password' className='form-control login-input' placeholder='Enter your password' />
+                            <input
+                                type='password'
+                                className='form-control login-input'
+                                placeholder='Enter your password'
+                                value={this.state.passWord}
+                                onChange={(event) => this.handleOnChangePW(event)}
+                            />
                         </div>
                         <div className='col-12 ' >
-                            <button className='login-btn'>Login</button>
+                            <button className='login-btn'
+                                onClick={() => this.handleClickLogin()}
+                            >
+                                Login
+                            </button>
                         </div>
                         <div className='col-12'>
                             <span className='text-forgot'>Forgot your password</span>
