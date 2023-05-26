@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from "connected-react-router";
 
-//import * as actions from "../store/actions";
 import * as actions from "../../store/actions";
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
-
+import { handleLoginApi } from '../../services/userService';
 
 class Login extends Component {
     constructor(props) {
@@ -14,6 +13,8 @@ class Login extends Component {
         this.state = {
             userName: '',
             passWord: '',
+            isShowPW: false,
+            errMessage: '',
         }
     }
 
@@ -25,8 +26,34 @@ class Login extends Component {
         this.setState({ passWord: event.target.value });
     }
 
-    handleClickLogin = () => {
-        console.log('UserName : ', this.state.userName, ' PW : ', this.state.passWord)
+    handleClickLogin = async () => {
+        this.setState({
+            errMessage: '',
+        })
+        try {
+            let data = await handleLoginApi(this.state.userName, this.state.passWord)
+            if (data && data.errCode !== 0) {
+                this.setState({
+                    errMessage: data.message,
+                })
+            }
+            if (data && data.errCode === 0) {
+                userLoginSuccess(data.user);
+                console.log(data);
+
+            }
+        } catch (error) {
+
+            if (error.response)
+                if (error.response.data)
+                    this.setState({
+                        errMessage: error.response.data.message,
+                    })
+        }
+    }
+
+    handleClickEye = () => {
+        this.setState({ isShowPW: !this.state.isShowPW })
     }
 
     render() {
@@ -48,12 +75,22 @@ class Login extends Component {
                         <div className='col-12 form-group'>
                             <label>Password :</label>
                             <input
-                                type='password'
+                                type={this.state.isShowPW === true ? 'text' : 'password'}
                                 className='form-control login-input'
                                 placeholder='Enter your password'
                                 value={this.state.passWord}
                                 onChange={(event) => this.handleOnChangePW(event)}
                             />
+                            <span>
+                                <i class={
+                                    this.state.isShowPW ? "fas fa-eye-slash" : "fas fa-eye"}
+                                    onClick={() => this.handleClickEye()}
+                                >
+                                </i>
+                            </span>
+                        </div>
+                        <div className='col-12' style={{ color: 'red' }}>
+                            {this.state.errMessage}
                         </div>
                         <div className='col-12 ' >
                             <button className='login-btn'
@@ -89,8 +126,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
-        adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
-        adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        // adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
+        // adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        // userLoginFail: () => dispatch(actions.userLoginFail()),
+        userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor))
     };
 };
 
