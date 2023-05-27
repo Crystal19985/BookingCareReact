@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss'
-import { getAllUsers } from '../../services/userService'
+import { getAllUsers } from '../../services/userService';
+import ModalUser from './ModalUser';
 
 class UserManage extends Component {
 
@@ -10,6 +11,7 @@ class UserManage extends Component {
         super(props);
         this.state = {
             arrUsers: [],
+            isOpenModalUser: false,
         }
     }
 
@@ -19,6 +21,18 @@ class UserManage extends Component {
             this.setState({
                 arrUsers: res.users,
             })
+    }
+
+    handleAddNewUser = () => {
+        this.setState({
+            isOpenModalUser: true
+        });
+    }
+
+    handleToggleModalUser = () => {
+        this.setState({
+            isOpenModalUser: !this.state.isOpenModalUser,
+        })
     }
     /** Life cycle
      *  Run component :
@@ -34,7 +48,20 @@ class UserManage extends Component {
         let { arrUsers } = this.state;
         return (
             <div className='users-container'>
+                <ModalUser
+                    isOpen={this.state.isOpenModalUser}
+                    toggleFromParent={this.handleToggleModalUser}
+                />
                 <div className="title text-center">Manage users</div>
+                <div className='my-1'>
+                    <button
+                        type="button"
+                        className="btn btn-primary mx-3 px-3"
+                        onClick={() => this.handleAddNewUser()}>
+                        <i class="fas fa-plus"> </i>
+                        Add a new user
+                    </button>
+                </div>
                 <div className='users-table mt-3 mx-3'>
                     <table id="customers">
                         <tr>
@@ -49,7 +76,7 @@ class UserManage extends Component {
                             arrUsers.map((item, index) => {
                                 return (
                                     <>
-                                        <tr>
+                                        <tr key={index}>
                                             <td>{item.email}</td>
                                             <td>{item.firstName}</td>
                                             <td>{item.lastName}</td>
