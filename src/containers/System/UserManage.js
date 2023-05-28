@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss'
-import { getAllUsersService, createNewUserService } from '../../services/userService';
+import { getAllUsersService, createNewUserService, deleteUserService } from '../../services/userService';
 import ModalUser from './ModalUser';
+import { emitter } from '../../utils/emitter';
 
 class UserManage extends Component {
 
@@ -35,6 +36,11 @@ class UserManage extends Component {
                 this.setState({
                     isOpenModalUser: false,
                 })
+
+                emitter.emit('EVENT_CLEAR_INPUT_DATA', { 'id': 'your id' });
+                //params 1: tên event để các subcriber lắng nghe, params 2 : data truyền theo (ở trên chỉ là ví dụ)
+                //Emitter phát event : sau khi create new user ==> phát event tác động tới 
+                //child User Modal, thằng child lắng nghe và thực hiện thay đổi state
             }
             else {
                 alert(res.message);
@@ -54,6 +60,18 @@ class UserManage extends Component {
         this.setState({
             isOpenModalUser: !this.state.isOpenModalUser,
         })
+    }
+
+    handleClickBtnDelete = async (user) => {
+        try {
+            let res = await deleteUserService(user.id);
+            if (res && res.errCode === 0) {
+                await this.getAllUsers();
+            }
+            else alert(res.message);
+        } catch (error) {
+            alert(error);
+        }
     }
     /** Life cycle
      *  Run component :
@@ -106,8 +124,18 @@ class UserManage extends Component {
                                                 <td>{item.lastName}</td>
                                                 <td>{item.address}</td>
                                                 <td>
-                                                    <button className="btn-edit"><i className="fas fa-pencil-alt"></i></button>
-                                                    <button className="btn-delete"><i className="fas fa-trash"></i></button>
+                                                    <button
+                                                        className="btn-edit"
+
+                                                    >
+                                                        <i className="fas fa-pencil-alt"></i>
+                                                    </button>
+                                                    <button
+                                                        className="btn-delete"
+                                                        onClick={() => this.handleClickBtnDelete(item)}
+                                                    >
+                                                        <i className="fas fa-trash"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </>

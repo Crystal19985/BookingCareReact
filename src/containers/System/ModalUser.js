@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { emitter } from '../../utils/emitter';
+import { EmitHint } from 'typescript';
 
 class ModalUser extends Component {
 
@@ -14,6 +16,19 @@ class ModalUser extends Component {
             lastName: '',
             address: '',
         }
+        this.listToEmitter(); //Func lắng nghe emitter từ publisher. Hàm này nằm trong contructor để Mount vào component
+    }
+
+    listToEmitter = () => {
+        emitter.on('EVENT_CLEAR_INPUT_DATA', () => {
+            this.state = {
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                address: '',
+            }
+        })
     }
 
     componentDidMount() {

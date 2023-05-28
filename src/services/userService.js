@@ -1,5 +1,6 @@
 import axios from '../axios';
 
+
 const handleLoginApi = (email, password) => {
     return axios.post('/api/login', { email, password });
 }// Method post, phia server để nhận được tham số req : dùng req.body.email, req.body.password 
@@ -12,8 +13,13 @@ const createNewUserService = (data) => {
     return axios.post('/api/create-new-user', data);
 }
 
+const deleteUserService = (userId) => {
+    return axios.delete('/api/delete-user', { data: { id: userId } });
+}
+
 export {
     handleLoginApi,
     getAllUsersService,
     createNewUserService,
+    deleteUserService,
 };
