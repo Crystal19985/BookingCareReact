@@ -1,3 +1,8 @@
+BỐ CỤC FOLDER :
+Folder Container : Chứa các component render (ví dụ: Home page,...)
+Folder store : G:\FullStack\FrontendReactjs\src\store
+    + Chứa action và reducer của REDUX
+
 #38 
     G:\FullStack\FrontendReactjs\src\containers\Header\menuApp.js
     --> Khai bao menu động nghĩa là sao (video 6:29)

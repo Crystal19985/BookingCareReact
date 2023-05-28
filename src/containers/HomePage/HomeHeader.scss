@@ -1,0 +1,58 @@
+.home-header-container {
+    height: 60px;
+    border: 1px solid red;
+    width: 100%;
+    padding: 0 20px;
+
+    .home-header-content{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        border: 1px solid black;
+
+        .left-content{
+            width: 25%;
+            display: flex;
+            align-items: center;
+            border: 1px solid green;
+            
+            .fas{
+                font-size: 30px;
+                color: gray;
+                cursor: pointer;
+            }
+
+            .header-logo{
+                background: url('../../assets/logo.svg') center center no-repeat;
+                height: 100%;
+                width: 100%;
+                cursor: pointer;
+            }
+        }
+
+        .center-content{
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid blue;
+            
+            .child-content{
+                .sub-title{
+                    font-weight: 300;
+                    font-size: 12px;
+                }
+            }            
+        }
+
+        .right-content{
+            width: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid brown;
+        }
+    }
+
+    
+}
