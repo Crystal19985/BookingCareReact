@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss'
-import { getAllUsersService, createNewUserService, deleteUserService } from '../../services/userService';
+import { getAllUsersService, createNewUserService, deleteUserService, editUserService } from '../../services/userService';
 import ModalUser from './ModalUser';
+import ModalEditUser from './ModalEditUser';
 import { emitter } from '../../utils/emitter';
 
 class UserManage extends Component {
@@ -12,7 +13,9 @@ class UserManage extends Component {
         super(props);
         this.state = {
             arrUsers: [],
+            editUser: {},
             isOpenModalUser: false,
+            isOpenModalEditUser: false,
         }
     }
 
@@ -56,13 +59,41 @@ class UserManage extends Component {
         });
     }
 
-    handleToggleModalUser = () => {
+    handleToggleModalNewUser = () => {
         this.setState({
             isOpenModalUser: !this.state.isOpenModalUser,
         })
     }
 
-    handleClickBtnDelete = async (user) => {
+    handleToggleModalEditUser = () => {
+        this.setState({
+            isOpenModalEditUser: !this.state.isOpenModalEditUser,
+        })
+    }
+
+    handleClickBtnEditUser = (user) => {
+        this.setState({
+            editUser: user,
+            isOpenModalEditUser: true,
+        })
+    }
+
+    handleEditUser = async (user) => {
+        try {
+            let res = await editUserService(user);
+            if (res && res.errCode === 0) {
+                await this.getAllUsers();
+                this.setState({
+                    isOpenModalEditUser: false,
+                })
+            }
+            else alert(res.message);
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    handleClickBtnDeleteUser = async (user) => {
         try {
             let res = await deleteUserService(user.id);
             if (res && res.errCode === 0) {
@@ -89,9 +120,19 @@ class UserManage extends Component {
             <div className='users-container'>
                 <ModalUser
                     isOpen={this.state.isOpenModalUser}
-                    toggleFromParent={this.handleToggleModalUser}
+                    toggleFromParent={this.handleToggleModalNewUser}
                     createNewUser={this.createNewUser}
                 />
+                {// this.state.isOpenModalEditUser && : mục đích khi page render lên, component ModelEditUser chưa được render ==> sử dụng được hàm componentDidMount trong component
+                    this.state.isOpenModalEditUser &&
+                    <ModalEditUser
+                        isOpen={this.state.isOpenModalEditUser}
+                        toggleFromParent={this.handleToggleModalEditUser}
+                        currentUser={this.state.editUser}
+                        editUser={this.handleEditUser}
+                    />
+                }
+
                 <div className="title text-center">Manage users</div>
                 <div className='my-1'>
                     <button
@@ -126,13 +167,13 @@ class UserManage extends Component {
                                                 <td>
                                                     <button
                                                         className="btn-edit"
-
+                                                        onClick={() => this.handleClickBtnEditUser(item)}
                                                     >
                                                         <i className="fas fa-pencil-alt"></i>
                                                     </button>
                                                     <button
                                                         className="btn-delete"
-                                                        onClick={() => this.handleClickBtnDelete(item)}
+                                                        onClick={() => this.handleClickBtnDeleteUser(item)}
                                                     >
                                                         <i className="fas fa-trash"></i>
                                                     </button>
