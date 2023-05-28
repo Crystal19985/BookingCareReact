@@ -8,7 +8,11 @@ class ModalUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            address: '',
         }
     }
 
@@ -17,6 +21,35 @@ class ModalUser extends Component {
 
     toggle = () => {
         this.props.toggleFromParent();
+    }
+
+    handleOnChangeInput = (event, id) => {
+        let copyState = { ...this.state };
+        copyState[id] = event.target.value;
+        this.setState({
+            ...copyState
+        })
+
+    }
+
+    checkValidInputData = () => {
+        let isValid = true;
+        let arrInput = ['email', 'password', 'firstName', 'lastName', 'address'];
+        for (let i = 0; i < arrInput.length; i++) {
+            if (!this.state[arrInput[i]]) {
+                isValid = false;
+                alert(arrInput[i] + ' input parameter is not valid !!!');
+                break;
+            }
+        }
+        return isValid;
+    }
+
+    handleClickAddNew = () => {
+        let isValid = this.checkValidInputData();
+        if (isValid) {
+            this.props.createNewUser(this.state);
+        }
     }
 
     render() {
@@ -33,30 +66,53 @@ class ModalUser extends Component {
                     <div className='modal-user-body'>
                         <div className='input-container'>
                             <label>Email</label>
-                            <input type='text'></input>
+                            <input
+                                type='email'
+                                onChange={(event) => this.handleOnChangeInput(event, 'email')}
+                                value={this.state.email}
+                            >
+                            </input>
                         </div>
                         <div className='input-container'>
                             <label>Password</label>
-                            <input type='text'></input>
+                            <input
+                                type='password'
+                                onChange={(event) => this.handleOnChangeInput(event, 'password')}
+                                value={this.state.password}
+                            >
+                            </input>
                         </div>
                         <div className='input-container'>
                             <label>First Name</label>
-                            <input type='text'></input>
+                            <input
+                                type='text'
+                                onChange={(event) => this.handleOnChangeInput(event, 'firstName')}
+                                value={this.state.firstName}
+                            >
+                            </input>
                         </div>
                         <div className='input-container'>
-                            <label>last Name</label>
-                            <input type='text'></input>
+                            <label>Last Name</label>
+                            <input
+                                type='text'
+                                onChange={(event) => this.handleOnChangeInput(event, 'lastName')}
+                                value={this.state.lastName}
+                            >
+                            </input>
                         </div>
                         <div className='input-container input-max-width'>
                             <label>Address</label>
-                            <input type='text'></input>
+                            <input
+                                type='text'
+                                onChange={(event) => this.handleOnChangeInput(event, 'address')}
+                                value={this.state.address}
+                            >
+                            </input>
                         </div>
                     </div>
-
-
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" className="px-3" onClick={() => this.toggle()}>Save changes</Button>{' '}
+                    <Button color="primary" className="px-3" onClick={() => this.handleClickAddNew()}>Add new</Button>{' '}
                     <Button color="secondary" className="px-3" onClick={() => this.toggle()}>Close</Button>
                 </ModalFooter>
             </Modal>

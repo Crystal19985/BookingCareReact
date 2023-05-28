@@ -81,7 +81,7 @@ class Login extends Component {
                                 onChange={(event) => this.handleOnChangePW(event)}
                             />
                             <span>
-                                <i class={
+                                <i className={
                                     this.state.isShowPW ? "fas fa-eye-slash" : "fas fa-eye"}
                                     onClick={() => this.handleClickEye()}
                                 >
@@ -106,7 +106,7 @@ class Login extends Component {
                         </div>
                         <div className='col-12 login-social'>
                             <i className="fab fa-google-plus-g google"></i>
-                            <i class="fab fa-facebook-f facebook"></i>
+                            <i className="fab fa-facebook-f facebook"></i>
                         </div>
 
                     </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss'
-import { getAllUsers } from '../../services/userService';
+import { getAllUsersService, createNewUserService } from '../../services/userService';
 import ModalUser from './ModalUser';
 
 class UserManage extends Component {
@@ -16,14 +16,35 @@ class UserManage extends Component {
     }
 
     async componentDidMount() {
-        let res = await getAllUsers('ALL');
+        await this.getAllUsers();
+    }
+
+    getAllUsers = async () => {
+        let res = await getAllUsersService('ALL');
         if (res && res.errCode === 0)
             this.setState({
                 arrUsers: res.users,
             })
     }
 
-    handleAddNewUser = () => {
+    createNewUser = async (data) => {
+        try {
+            let res = await createNewUserService(data);
+            if (res && res.errCode === 0) {
+                await this.getAllUsers();
+                this.setState({
+                    isOpenModalUser: false,
+                })
+            }
+            else {
+                alert(res.message);
+            }
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    handleClickBtnAddNewUser = () => {
         this.setState({
             isOpenModalUser: true
         });
@@ -51,45 +72,49 @@ class UserManage extends Component {
                 <ModalUser
                     isOpen={this.state.isOpenModalUser}
                     toggleFromParent={this.handleToggleModalUser}
+                    createNewUser={this.createNewUser}
                 />
                 <div className="title text-center">Manage users</div>
                 <div className='my-1'>
                     <button
                         type="button"
                         className="btn btn-primary mx-3 px-3"
-                        onClick={() => this.handleAddNewUser()}>
-                        <i class="fas fa-plus"> </i>
+                        onClick={this.handleClickBtnAddNewUser}
+                    >
+                        <i className="fas fa-plus"> </i>
                         Add a new user
                     </button>
                 </div>
                 <div className='users-table mt-3 mx-3'>
                     <table id="customers">
-                        <tr>
-                            <th>Email</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Address</th>
-                            <th>Action</th>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <th>Email</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                            </tr>
 
-                        {
-                            arrUsers.map((item, index) => {
-                                return (
-                                    <>
-                                        <tr key={index}>
-                                            <td>{item.email}</td>
-                                            <td>{item.firstName}</td>
-                                            <td>{item.lastName}</td>
-                                            <td>{item.address}</td>
-                                            <td>
-                                                <button className="btn-edit"><i className="fas fa-pencil-alt"></i></button>
-                                                <button className="btn-delete"><i className="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    </>
-                                )
-                            })
-                        }
+                            {
+                                arrUsers.map((item, index) => {
+                                    return (
+                                        <>
+                                            <tr key={index}>
+                                                <td>{item.email}</td>
+                                                <td>{item.firstName}</td>
+                                                <td>{item.lastName}</td>
+                                                <td>{item.address}</td>
+                                                <td>
+                                                    <button className="btn-edit"><i className="fas fa-pencil-alt"></i></button>
+                                                    <button className="btn-delete"><i className="fas fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )
+                                })
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
