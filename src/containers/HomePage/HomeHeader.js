@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import './HomeHeader.scss'
+import { FormattedMessage } from 'react-intl';
 
 class HomeHeader extends Component {
 
     render() {
-
+        console.log('>>> check props homeheader: ', this.props);
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -18,36 +19,39 @@ class HomeHeader extends Component {
                         </div>
                         <div className='center-content'>
                             <div className='child-content'>
-                                <div><b>Chuyên khoa</b></div>
-                                <div className='sub-title'>Tìm bác sỹ theo chuyên khoa</div>
+                                <div><b><FormattedMessage id="homeheader.specility" /></b></div>
+                                <div className='sub-title'><FormattedMessage id="homeheader.search-doctor" /></div>
                             </div>
                             <div className='child-content'>
-                                <div><b>Cơ sơ y tế</b></div>
-                                <div className='sub-title'>Chọn bệnh viện phòng khám</div>
+                                <div><b><FormattedMessage id="homeheader.health-facility" /></b></div>
+                                <div className='sub-title'><FormattedMessage id="select-room" /></div>
                             </div>
                             <div className='child-content'>
-                                <div><b>Bác sĩ</b></div>
-                                <div className='sub-title'>Chọn bác sỹ giỏi</div>
+                                <div><b><FormattedMessage id="homeheader.doctor" /></b></div>
+                                <div className='sub-title'><FormattedMessage id="homeheader.select-doctor" /></div>
                             </div>
                             <div className='child-content'>
-                                <div><b>Gói khám</b></div>
-                                <div className='sub-title'>Khám sức khỏe tổng quát</div>
+                                <div><b><FormattedMessage id="homeheader.fee" /></b></div>
+                                <div className='sub-title'><FormattedMessage id="check-health" /></div>
                             </div>
                         </div>
                         <div className='right-content'>
                             <div className='supprot'>
-                                <i className="fas fa-question-circle"> Hỗ trợ </i>
+                                <i className="fas fa-question-circle"> <FormattedMessage id="homeheader.support" /></i>
                             </div>
-                            <div className='flag'>
+                            <div className='language-vi'>
                                 VN
+                            </div>
+                            <div className='language-en'>
+                                EN
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className='home-header-banner'>
                     <div className='content-up'>
-                        <div className='title1'>NỀN TẢNG Y TẾ</div>
-                        <div className='title2'>CHĂM SÓC SỨC KHỎE TOÀN DIỆN</div>
+                        <div className='title1'><FormattedMessage id="banner.title1" /></div>
+                        <div className='title2'><FormattedMessage id="banner.title2" /></div>
                         <div className='search'>
                             <i className="fas fa-search"></i>
                             <input type='text' placeholder='Tìm kiểm chuyên khoa' />
@@ -57,27 +61,27 @@ class HomeHeader extends Component {
                         <div className='options'>
                             <div className='option-child'>
                                 <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'>Khám chuyên khoa</div>
+                                <div className='child-text'><FormattedMessage id="banner.child1" /></div>
                             </div>
                             <div className='option-child'>
                                 <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'>Khám từ xa</div>
+                                <div className='child-text'><FormattedMessage id="banner.child2" /></div>
                             </div>
                             <div className='option-child'>
                                 <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'>Khám tổng quát</div>
+                                <div className='child-text'><FormattedMessage id="banner.child3" /></div>
                             </div>
                             <div className='option-child'>
                                 <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'>Xét nghiệm y học</div>
+                                <div className='child-text'><FormattedMessage id="banner.child4" /></div>
                             </div>
                             <div className='option-child'>
                                 <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'>Sức khỏe tinh thần</div>
+                                <div className='child-text'><FormattedMessage id="banner.child5" /></div>
                             </div>
                             <div className='option-child'>
                                 <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'>Khám nha khoa</div>
+                                <div className='child-text'><FormattedMessage id="banner.child6" /></div>
                             </div>
                         </div>
                     </div>
