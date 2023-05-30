@@ -10,7 +10,6 @@ class HomePage extends Component {
         return (
             <>
                 <HomeHeader />
-                <div>HELLO HOMEPAGE COMPONENT</div>
             </>
         );
     }
