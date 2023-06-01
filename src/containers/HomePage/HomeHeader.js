@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 import './HomeHeader.scss'
 import { FormattedMessage } from 'react-intl';
+import { LANGUAGES } from '../../utils/constant'
+import { changeLanguageApp } from '../../store/actions';
 
 class HomeHeader extends Component {
 
+    changeLanguage = (language) => {
+        this.props.changeLanguageAppRedux(language)
+    }
     render() {
         console.log('>>> check props homeheader: ', this.props);
         return (
@@ -24,7 +28,7 @@ class HomeHeader extends Component {
                             </div>
                             <div className='child-content'>
                                 <div><b><FormattedMessage id="homeheader.health-facility" /></b></div>
-                                <div className='sub-title'><FormattedMessage id="select-room" /></div>
+                                <div className='sub-title'><FormattedMessage id="homeheader.select-room" /></div>
                             </div>
                             <div className='child-content'>
                                 <div><b><FormattedMessage id="homeheader.doctor" /></b></div>
@@ -32,18 +36,25 @@ class HomeHeader extends Component {
                             </div>
                             <div className='child-content'>
                                 <div><b><FormattedMessage id="homeheader.fee" /></b></div>
-                                <div className='sub-title'><FormattedMessage id="check-health" /></div>
+                                <div className='sub-title'><FormattedMessage id="homeheader.check-health" /></div>
                             </div>
                         </div>
                         <div className='right-content'>
-                            <div className='supprot'>
-                                <i className="fas fa-question-circle"> <FormattedMessage id="homeheader.support" /></i>
+                            <div className='item support'>
+                                <i className="fas fa-question-circle"></i>
+                                <FormattedMessage id="homeheader.support" />
                             </div>
-                            <div className='language-vi'>
-                                VN
+                            <div className={this.props.language === LANGUAGES.VI ?
+                                'item language-vi active' : 'item language-vi'}>
+                                <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>
+                                    VN
+                                </span>
                             </div>
-                            <div className='language-en'>
-                                EN
+                            <div className={this.props.language === LANGUAGES.EN ?
+                                'item language-en active' : 'item language-en'}>
+                                <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>
+                                    EN
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -86,7 +97,6 @@ class HomeHeader extends Component {
                         </div>
                     </div>
                 </div>
-
             </React.Fragment>
         );
     }
@@ -94,12 +104,14 @@ class HomeHeader extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        language: state.app.language
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        changeLanguageAppRedux: (lang) => dispatch(changeLanguageApp(lang))
     };
 };
 
