@@ -9,13 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 class Specialty extends Component {
 
     render() {
-        let settings = {
-            dot: false,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 4,
-            slidesToScroll: 1,
-        }
+        let { settings } = this.props
 
         return (
             <div className='section-specialty'>
