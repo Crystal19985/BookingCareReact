@@ -8,16 +8,40 @@
     color: $common-text-color;
     height: 40px;
     position: relative;
-    .btn-logout {
-        color: $common-text-color;
-        line-height: 40px;
-        height: 40px;
-        padding: 0 10px;
-        &:hover {
-            background-color: darken($colormain, 5);
+
+    .header-left{
+
+    }
+
+    .header-right{
+        display: flex;
+        align-items: center;  
+        cursor: pointer;
+
+        .item{
+            margin: auto 8px;
         }
-        i {
-            font-size: $base-size + 1px;
+
+        .active{
+            color: darkturquoise;
+        } 
+
+        .btn-logout {
+            color: $common-text-color;
+            line-height: 40px;
+            height: 40px;
+            padding: 0 10px;
+        
+            &:hover {
+                background-color: darken($colormain, 5);
+            }
+
+            i {
+                font-size: $base-size + 1px;
+            }
         }
     }
+
+
+
 }

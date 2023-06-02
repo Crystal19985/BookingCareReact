@@ -29,4 +29,7 @@ Folder store : G:\FullStack\FrontendReactjs\src\store
             emitter : 1 publisher phát event (Fire event)
                       nhieu subcriber (dky với publisher)  nhận event (lắng nghe events)
 
+#53
+    Tại sao App.js : bên ngoài thẻ Switch cần bọc thẻ Router, mà System.js thẻ Switch không bọc gì                      
+
         
