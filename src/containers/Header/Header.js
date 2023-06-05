@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import * as actions from "../../store/actions";
 import Navigator from '../../components/Navigator';
 import { adminMenu } from './menuApp';
 import { LANGUAGES } from '../../utils';
 import './Header.scss';
+import { FormattedMessage } from 'react-intl';
 
 class Header extends Component {
 
@@ -14,7 +14,7 @@ class Header extends Component {
     }
 
     render() {
-        const { processLogout, language } = this.props;
+        const { processLogout, language, userInfo } = this.props;
 
         return (
             <div className="header-container">
@@ -25,16 +25,19 @@ class Header extends Component {
 
                 {/* nút logout */}
                 <div className='header-right'>
+                    <span className='wellcome'><FormattedMessage id="homeheader.wellcome" />- {userInfo.firstName}</span>
                     <div
                         className={language === LANGUAGES.VI ? 'item language-vi active' : 'item language-vi'}
                         onClick={() => { this.handleClickChangeLanguage(LANGUAGES.VI) }}
                     >
-                        VN</div>
+                        VN
+                    </div>
                     <div
                         className={language === LANGUAGES.EN ? 'item language-en active' : 'item language-en'}
                         onClick={() => { this.handleClickChangeLanguage(LANGUAGES.EN) }}
                     >
-                        EN</div>
+                        EN
+                    </div>
                     <div className="item btn-logout"
                         onClick={processLogout}>
                         <i className="fas fa-sign-out-alt"></i>
@@ -50,7 +53,8 @@ class Header extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
-        language: state.app.language
+        language: state.app.language,
+        userInfo: state.user.userInfo
     };
 };
 
