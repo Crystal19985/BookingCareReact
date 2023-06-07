@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllCodeService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
+import * as actions from '../../../store/actions'
 
 class UserRedux extends Component {
 
@@ -14,19 +15,31 @@ class UserRedux extends Component {
     }
 
     async componentDidMount() {
-        try {
-            let res = await getAllCodeService('role');
-            console.log('check gender res : ', res);
-            if (res && res.errCode === 0) {
-                this.setState({
-                    genderArr: res.data,
-                });
-            }
-        } catch (error) {
+        this.props.getGenderStart();
+        // try {
+        //     let res = await getAllCodeService('role');
+        //     console.log('check gender res : ', res);
+        //     if (res && res.errCode === 0) {
+        //         this.setState({
+        //             genderArr: res.data,
+        //         });
+        //     }
+        // } catch (error) {
 
-        }
+        // }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // render => didupdate
+        // hiện tại(this)  và quá khứ (previous) : So sánh với nhau
+        // []   [3]
+        // [3]  [3]
+        if (prevProps.genderRedux !== this.props.genderRedux) {
+            this.setState({
+                genderArr: this.props.genderRedux
+            })
+        }
+    }
 
     render() {
         const { language } = this.props;
@@ -110,12 +123,16 @@ class UserRedux extends Component {
 
 const mapStateToProps = state => {
     return {
-        language: state.app.language
+        language: state.app.language,
+        genderRedux: state.admin.genders,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        // processLogout: () => dispatch(actions.processLogout()),
+        // changeLanguageAppRedux: (lang) => dispatch(actions.changeLanguageApp(lang))
+        getGenderStart: () => dispatch(actions.fetchGenderStart()),
     };
 };
 
