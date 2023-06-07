@@ -21,10 +21,15 @@ const editUserService = (user) => {
     return axios.put('/api/edit-user', user);
 }
 
+const getAllCodeService = (typeInput) => {
+    return axios.get(`/api/get-allcode?type=${typeInput}`);
+}// Method get, phia server để nhận được tham số req : dùng req.query.id
+
 export {
     handleLoginApi,
     getAllUsersService,
     createNewUserService,
     deleteUserService,
     editUserService,
+    getAllCodeService,
 };
