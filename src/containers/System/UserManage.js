@@ -155,7 +155,7 @@ class UserManage extends Component {
                                 <th>Action</th>
                             </tr>
 
-                            {
+                            {arrUsers && arrUsers.length > 0 &&
                                 arrUsers.map((item, index) => {
                                     return (
                                         <>
