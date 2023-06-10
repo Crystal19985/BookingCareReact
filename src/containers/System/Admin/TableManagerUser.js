@@ -25,8 +25,12 @@ class TableManagerUser extends Component {
         }
     }
 
-    handleDeleteUser = (user) => {
+    handleClickBtnDeleteUser = (user) => {
         this.props.deleteAUserRedux(user.id);
+    }
+
+    handleClickBtnEditUser = (user) => {
+        this.props.handleEditUserFromParent(user);
     }
 
     render() {
@@ -61,7 +65,7 @@ class TableManagerUser extends Component {
                                             </button>
                                             <button
                                                 className="btn-delete"
-                                                onClick={() => this.handleDeleteUser(item)}
+                                                onClick={() => this.handleClickBtnDeleteUser(item)}
                                             >
                                                 <i className="fas fa-trash"></i>
                                             </button>

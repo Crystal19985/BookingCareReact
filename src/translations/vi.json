@@ -48,6 +48,7 @@
         "position": "Chức danh",
         "role": "Vai trò",
         "image": "Ảnh người dùng",
-        "save": "Lưu user"
+        "save": "Lưu user",
+        "edit": "Lưu thay đổi"
     }
 }
