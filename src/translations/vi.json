@@ -50,5 +50,9 @@
         "image": "Ảnh người dùng",
         "save": "Lưu user",
         "edit": "Lưu thay đổi"
+    },
+    "homepage": {
+        "outstanding-doctor": "Bác sỹ nổi bật tuần qua",
+        "more-infor": "Xem thêm"
     }
 }
