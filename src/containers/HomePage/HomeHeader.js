@@ -11,7 +11,7 @@ class HomeHeader extends Component {
         this.props.changeLanguageAppRedux(language)
     }
     render() {
-        console.log('>>> check props homeheader: ', this.props);
+
         return (
             <React.Fragment>
                 <div className='home-header-container'>

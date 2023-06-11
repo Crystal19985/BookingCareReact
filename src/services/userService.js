@@ -1,6 +1,7 @@
 import axios from '../axios';
 
 
+
 const handleLoginApi = (email, password) => {
     return axios.post('/api/login', { email, password });
 }// Method post, phia server để nhận được tham số req : dùng req.body.email, req.body.password 
@@ -25,6 +26,12 @@ const getAllCodeService = (typeInput) => {
     return axios.get(`/api/get-allcode?type=${typeInput}`);
 }// Method get, phia server để nhận được tham số req : dùng req.query.id
 
+const getTopDoctorHomeService = (limit) => {
+    return axios.get(`/api/top-doctor-home?limit=${limit}`);
+}// Method get, phia server để nhận được tham số req : dùng req.query.id
+
+
+
 export {
     handleLoginApi,
     getAllUsersService,
@@ -32,4 +39,5 @@ export {
     deleteUserService,
     editUserService,
     getAllCodeService,
+    getTopDoctorHomeService,
 };
