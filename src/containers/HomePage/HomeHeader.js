@@ -11,7 +11,6 @@ class HomeHeader extends Component {
         this.props.changeLanguageAppRedux(language)
     }
     render() {
-
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -21,6 +20,7 @@ class HomeHeader extends Component {
                             <div className='header-logo'>
                             </div>
                         </div>
+
                         <div className='center-content'>
                             <div className='child-content'>
                                 <div><b><FormattedMessage id="homeheader.specility" /></b></div>
@@ -39,6 +39,7 @@ class HomeHeader extends Component {
                                 <div className='sub-title'><FormattedMessage id="homeheader.check-health" /></div>
                             </div>
                         </div>
+
                         <div className='right-content'>
                             <div className='item support'>
                                 <i className="fas fa-question-circle"></i>
@@ -59,44 +60,49 @@ class HomeHeader extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='home-header-banner'>
-                    <div className='content-up'>
-                        <div className='title1'><FormattedMessage id="banner.title1" /></div>
-                        <div className='title2'><FormattedMessage id="banner.title2" /></div>
-                        <div className='search'>
-                            <i className="fas fa-search"></i>
-                            <input type='text' placeholder='Tìm kiểm chuyên khoa' />
-                        </div>
-                    </div>
-                    <div className='content-down'>
-                        <div className='options'>
-                            <div className='option-child'>
-                                <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'><FormattedMessage id="banner.child1" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'><FormattedMessage id="banner.child2" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'><FormattedMessage id="banner.child3" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'><FormattedMessage id="banner.child4" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'><FormattedMessage id="banner.child5" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='child-icon'><i class="fas fa-hospital"></i></div>
-                                <div className='child-text'><FormattedMessage id="banner.child6" /></div>
+
+                {this.props.isShowBanner === true &&
+                    <div className='home-header-banner'>
+                        <div className='content-up'>
+                            <div className='title1'><FormattedMessage id="banner.title1" /></div>
+                            <div className='title2'><FormattedMessage id="banner.title2" /></div>
+                            <div className='search'>
+                                <i className="fas fa-search"></i>
+                                <input type='text' placeholder='Tìm kiểm chuyên khoa' />
                             </div>
                         </div>
+                        <div className='content-down'>
+                            <div className='options'>
+                                <div className='option-child'>
+                                    <div className='child-icon'><i class="fas fa-hospital"></i></div>
+                                    <div className='child-text'><FormattedMessage id="banner.child1" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='child-icon'><i class="fas fa-hospital"></i></div>
+                                    <div className='child-text'><FormattedMessage id="banner.child2" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='child-icon'><i class="fas fa-hospital"></i></div>
+                                    <div className='child-text'><FormattedMessage id="banner.child3" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='child-icon'><i class="fas fa-hospital"></i></div>
+                                    <div className='child-text'><FormattedMessage id="banner.child4" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='child-icon'><i class="fas fa-hospital"></i></div>
+                                    <div className='child-text'><FormattedMessage id="banner.child5" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='child-icon'><i class="fas fa-hospital"></i></div>
+                                    <div className='child-text'><FormattedMessage id="banner.child6" /></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                }
+
             </React.Fragment>
         );
     }

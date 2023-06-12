@@ -40,6 +40,12 @@ const createInforDoctorService = (data) => {
     return axios.post('/api/create-infor-doctor', data);
 }
 
+const getDetailInforDoctor = (doctorId) => {
+    return axios.get(`/api/get-infor-doctor-by-id?id=${doctorId}`);
+}// Method get, phia server để nhận được tham số req : dùng req.query.id
+
+
+
 
 
 
@@ -47,13 +53,7 @@ const createInforDoctorService = (data) => {
 
 
 export {
-    handleLoginApi,
-    getAllUsersService,
-    createNewUserService,
-    deleteUserService,
-    editUserService,
-    getAllCodeService,
-    getTopDoctorHomeService,
-    getAllDoctorsService,
-    createInforDoctorService,
+    handleLoginApi, getAllUsersService, createNewUserService, deleteUserService,
+    editUserService, getAllCodeService, getTopDoctorHomeService, getAllDoctorsService,
+    createInforDoctorService, getDetailInforDoctor
 };
