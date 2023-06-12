@@ -2,6 +2,8 @@ import axios from '../axios';
 
 
 
+
+
 const handleLoginApi = (email, password) => {
     return axios.post('/api/login', { email, password });
 }// Method post, phia server để nhận được tham số req : dùng req.body.email, req.body.password 
@@ -30,6 +32,18 @@ const getTopDoctorHomeService = (limit) => {
     return axios.get(`/api/top-doctor-home?limit=${limit}`);
 }// Method get, phia server để nhận được tham số req : dùng req.query.id
 
+const getAllDoctorsService = () => {
+    return axios.get(`/api/get-all-doctors`);
+}// Method get, phia server để nhận được tham số req : dùng req.query.id
+
+const createInforDoctorService = (data) => {
+    return axios.post('/api/create-infor-doctor', data);
+}
+
+
+
+
+
 
 
 export {
@@ -40,4 +54,6 @@ export {
     editUserService,
     getAllCodeService,
     getTopDoctorHomeService,
+    getAllDoctorsService,
+    createInforDoctorService,
 };

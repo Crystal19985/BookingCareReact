@@ -1,7 +1,8 @@
 import actionTypes from './actionTypes';
 import {
     getAllCodeService, createNewUserService, getAllUsersService,
-    deleteUserService, editUserService, getTopDoctorHomeService
+    deleteUserService, editUserService, getTopDoctorHomeService,
+    getAllDoctorsService, createInforDoctorService
 }
     from '../../services/userService';
 import { toast } from 'react-toastify';
@@ -251,6 +252,86 @@ export const fetchTopDoctorSuccess = (data) => ({
 export const fetchTopDoctorFail = () => ({
     type: actionTypes.FETCH_TOP_DOCTOR_FAIL,
 })
+
+
+// FETCH ALL DOCTOR
+export const fetchAllDoctorsStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctorsService();
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllDoctorsSuccess(res.data));
+
+                // Cach viet truc tiep 
+                /*
+                dispatch({
+                    type: actionTypes.FETCH_ALL_DOCTOR_SUCCESS,
+                    dataDoctors: res.data
+                })
+                */
+            }
+            else {
+                dispatch(fetchAllDoctorsFail());
+            }
+        } catch (error) {
+            dispatch(fetchAllDoctorsFail());
+            console.log('fetchAllDoctorsFail error', error);
+        }
+    }
+}
+
+export const fetchAllDoctorsSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_DOCTOR_SUCCESS,
+    dataDoctors: data
+})
+
+export const fetchAllDoctorsFail = () => ({
+    type: actionTypes.FETCH_ALL_DOCTOR_FAIL,
+})
+
+
+// CREATE INFOR DOCTOR
+export const createInforDoctorStart = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            console.log('check data send', data);
+            let res = await createInforDoctorService(data);
+            if (res && res.errCode === 0) {
+
+                dispatch(createInforDoctorSuccess());
+                toast.success("createInforDoctor succeed");
+                // Cach viet truc tiep 
+                /*
+                dispatch({
+                    type: actionTypes.CREATE_INFOR_DOCTOR_SUCCESS,
+                    dataDoctors: res.data
+                })
+                */
+            }
+            else {
+                dispatch(createInforDoctorFail());
+                toast.error("createInforDoctorFail 1");
+            }
+        } catch (error) {
+            dispatch(createInforDoctorFail());
+            toast.error("createInforDoctorFail 2");
+            console.log('createInforDoctorFail error', error);
+        }
+    }
+}
+
+export const createInforDoctorSuccess = () => ({
+    type: actionTypes.CREATE_INFOR_DOCTOR_SUCCESS,
+})
+
+export const createInforDoctorFail = () => ({
+    type: actionTypes.CREATE_INFOR_DOCTOR_FAIL,
+})
+
+
+
+
+
 
 // export const adminLoginSuccess = (adminInfo) => ({
 //     type: actionTypes.ADMIN_LOGIN_SUCCESS,

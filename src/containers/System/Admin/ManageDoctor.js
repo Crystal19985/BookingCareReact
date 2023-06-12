@@ -7,6 +7,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 import { FormattedMessage } from 'react-intl';
 import './ManageDoctor.scss';
 import Select from 'react-select';
+import { LANGUAGES } from '../../../utils';
 
 
 
@@ -29,19 +30,31 @@ class TableManagerUser extends Component {
             contentHTML: '',
             selectedOption: '',
             description: '',
-
+            selectDoctorList: [],
         }
     }
 
     componentDidMount() {
-
+        this.props.fetchAllDoctorsRedux();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.allDoctorsRedux !== this.props.allDoctorsRedux) {
+            let doctorList = this.buildDataInputSelect(this.props.allDoctorsRedux)
+            this.setState({
+                selectDoctorList: doctorList,
+            })
+        }
 
+        if (prevProps.language !== this.props.language) {
+            let doctorList = this.buildDataInputSelect(this.props.allDoctorsRedux)
+            this.setState({
+                selectDoctorList: doctorList,
+            })
+        }
     }
 
-    handleEditorChange({ html, text }) {
+    handleEditorChange = ({ html, text }) => {
         this.setState({
             contentMarkdown: text,
             contentHTML: html
@@ -49,7 +62,13 @@ class TableManagerUser extends Component {
     }
 
     handleSaveContentMarkdown = () => {
-        console.log('ho adfasfa check', this.state)
+        console.log('check this state of ManageDoctor:', this.state)
+        this.props.createInforDoctorRedux({
+            contentHTML: this.state.contentHTML,
+            contentMarkdown: this.state.contentMarkdown,
+            description: this.state.description,
+            doctorId: this.state.selectedOption.value
+        })
     }
 
     handleChange = selectedOption => {
@@ -60,6 +79,24 @@ class TableManagerUser extends Component {
         this.setState({
             description: event.target.value
         })
+    }
+
+    buildDataInputSelect = (inputDataArr) => {
+        let result = [];
+
+        if (inputDataArr && inputDataArr.length > 0) {
+            inputDataArr.map((item, index) => {
+                let obj = {};
+                let labelEn = `${item.firstName} ${item.lastName}`;
+                let labelVi = `${item.lastName} ${item.firstName}`;
+
+                obj.label = this.props.language === LANGUAGES.VI ? labelVi : labelEn;
+                obj.value = item.id;
+                result.push(obj);
+            })
+        }
+
+        return result;
     }
 
     render() {
@@ -77,7 +114,7 @@ class TableManagerUser extends Component {
                         <Select
                             value={this.state.selectedOption}
                             onChange={this.handleChange}
-                            options={options}
+                            options={this.state.selectDoctorList}
                         />
                     </div>
 
@@ -113,12 +150,15 @@ class TableManagerUser extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
+        language: state.app.language,
+        allDoctorsRedux: state.admin.allDoctors,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        // fetchUserRedux: () => dispatch(actions.fetchAllUsersStart()),
+        fetchAllDoctorsRedux: () => dispatch(actions.fetchAllDoctorsStart()),
+        createInforDoctorRedux: (data) => dispatch(actions.createInforDoctorStart(data)),
     };
 };
 
