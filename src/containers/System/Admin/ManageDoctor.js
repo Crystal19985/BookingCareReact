@@ -1,0 +1,125 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions';
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
+import { FormattedMessage } from 'react-intl';
+import './ManageDoctor.scss';
+import Select from 'react-select';
+
+
+
+// Initialize a markdown parser
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+]
+
+
+
+class TableManagerUser extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            contentMarkdown: '',
+            contentHTML: '',
+            selectedOption: '',
+            description: '',
+
+        }
+    }
+
+    componentDidMount() {
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+    }
+
+    handleEditorChange({ html, text }) {
+        this.setState({
+            contentMarkdown: text,
+            contentHTML: html
+        })
+    }
+
+    handleSaveContentMarkdown = () => {
+        console.log('ho adfasfa check', this.state)
+    }
+
+    handleChange = selectedOption => {
+        this.setState({ selectedOption });
+    }
+
+    handleOnChangeDesc = (event) => {
+        this.setState({
+            description: event.target.value
+        })
+    }
+
+    render() {
+
+        return (
+            <div className='manage-doctor-container'>
+                <div className='manage-doctor-title'>
+                    Tao them thong tin doctors
+                </div>
+
+                <div className='more-infor'>
+                    <div className='content-left form-group'>
+                        <label>Chon bac sy</label>
+
+                        <Select
+                            value={this.state.selectedOption}
+                            onChange={this.handleChange}
+                            options={options}
+                        />
+                    </div>
+
+                    <div className='content-right'>
+                        <label>Thong tin gioi thieu</label>
+                        <textarea className='form-control' rows='4'
+                            onChange={(event) => this.handleOnChangeDesc(event)}
+                            value={this.state.description}
+                        >
+                            adfasfwrqwrqwrrqr          AREA TEXT
+                        </textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <MdEditor
+                        style={{ height: '500px' }}
+                        renderHTML={text => mdParser.render(text)}
+                        onChange={this.handleEditorChange} />
+                </div>
+
+                <button
+                    onClick={() => this.handleSaveContentMarkdown()}
+                    className='save-content-doctor'
+                >
+                    Luu thong tin
+                </button>
+            </div>
+        );
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        isLoggedIn: state.user.isLoggedIn,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        // fetchUserRedux: () => dispatch(actions.fetchAllUsersStart()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableManagerUser);
