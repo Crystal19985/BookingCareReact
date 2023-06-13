@@ -15,8 +15,15 @@
         flex-wrap    : wrap;
         margin-bottom: 20px;
 
-        button {
-            border: 1px solid gray;
+
+        .btn-success {
+            &.active {
+                background-color: orange;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
         }
     }
 }
