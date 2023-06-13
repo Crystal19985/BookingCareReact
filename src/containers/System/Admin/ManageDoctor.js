@@ -7,7 +7,10 @@ import 'react-markdown-editor-lite/lib/index.css';
 import { FormattedMessage } from 'react-intl';
 import './ManageDoctor.scss';
 import Select from 'react-select';
-import { LANGUAGES } from '../../../utils';
+import { CRUD_ACTIONS, LANGUAGES } from '../../../utils';
+import { getDetailInforDoctor } from '../../../services/userService';
+
+
 
 
 
@@ -31,6 +34,7 @@ class TableManagerUser extends Component {
             selectedOption: '',
             description: '',
             selectDoctorList: [],
+            hasOldData: false,
         }
     }
 
@@ -62,17 +66,39 @@ class TableManagerUser extends Component {
     }
 
     handleSaveContentMarkdown = () => {
-        console.log('check this state of ManageDoctor:', this.state)
-        this.props.createInforDoctorRedux({
+        let { hasOldData } = this.state;
+        this.props.saveInforDoctorRedux({
             contentHTML: this.state.contentHTML,
             contentMarkdown: this.state.contentMarkdown,
             description: this.state.description,
-            doctorId: this.state.selectedOption.value
+            doctorId: this.state.selectedOption.value,
+            action: hasOldData === false ? CRUD_ACTIONS.CREATE : CRUD_ACTIONS.EDIT
         })
     }
 
-    handleChange = selectedOption => {
+    handleChangeSelect = async selectedOption => {
         this.setState({ selectedOption });
+        let respon = await getDetailInforDoctor(selectedOption.value);
+        console.log('>>> data detail doctor :', respon);
+
+        if (respon && respon.errCode === 0 && respon.data && respon.data.Markdown) {
+            let markdown = respon.data.Markdown;
+            this.setState({
+                contentHTML: markdown.contentHTML,
+                contentMarkdown: markdown.contentMarkdown,
+                description: markdown.description,
+                hasOldData: true,
+            })
+        }
+        else {
+            this.setState({
+                contentHTML: '',
+                contentMarkdown: '',
+                description: '',
+                hasOldData: false,
+            })
+        }
+
     }
 
     handleOnChangeDesc = (event) => {
@@ -100,7 +126,7 @@ class TableManagerUser extends Component {
     }
 
     render() {
-
+        let { hasOldData, contentMarkdown } = this.state;
         return (
             <div className='manage-doctor-container'>
                 <div className='manage-doctor-title'>
@@ -113,7 +139,7 @@ class TableManagerUser extends Component {
 
                         <Select
                             value={this.state.selectedOption}
-                            onChange={this.handleChange}
+                            onChange={this.handleChangeSelect}
                             options={this.state.selectDoctorList}
                         />
                     </div>
@@ -133,14 +159,19 @@ class TableManagerUser extends Component {
                     <MdEditor
                         style={{ height: '500px' }}
                         renderHTML={text => mdParser.render(text)}
-                        onChange={this.handleEditorChange} />
+                        onChange={this.handleEditorChange}
+                        value={contentMarkdown} />
                 </div>
 
                 <button
                     onClick={() => this.handleSaveContentMarkdown()}
-                    className='save-content-doctor'
+                    className={hasOldData === true ? 'save-content-doctor' : 'create-content-doctor'}
                 >
-                    Luu thong tin
+                    {hasOldData === true ?
+                        <span>Luu thong tin</span>
+                        :
+                        <span>Tao moi thong tin</span>
+                    }
                 </button>
             </div>
         );
@@ -158,7 +189,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllDoctorsRedux: () => dispatch(actions.fetchAllDoctorsStart()),
-        createInforDoctorRedux: (data) => dispatch(actions.createInforDoctorStart(data)),
+        saveInforDoctorRedux: (data) => dispatch(actions.saveInforDoctorStart(data)),
     };
 };
 

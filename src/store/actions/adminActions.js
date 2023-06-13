@@ -2,7 +2,7 @@ import actionTypes from './actionTypes';
 import {
     getAllCodeService, createNewUserService, getAllUsersService,
     deleteUserService, editUserService, getTopDoctorHomeService,
-    getAllDoctorsService, createInforDoctorService
+    getAllDoctorsService, saveInforDoctorService
 }
     from '../../services/userService';
 import { toast } from 'react-toastify';
@@ -291,15 +291,15 @@ export const fetchAllDoctorsFail = () => ({
 
 
 // CREATE INFOR DOCTOR
-export const createInforDoctorStart = (data) => {
+export const saveInforDoctorStart = (data) => {
     return async (dispatch, getState) => {
         try {
             console.log('check data send', data);
-            let res = await createInforDoctorService(data);
+            let res = await saveInforDoctorService(data);
             if (res && res.errCode === 0) {
 
-                dispatch(createInforDoctorSuccess());
-                toast.success("createInforDoctor succeed");
+                dispatch(saveInforDoctorSuccess());
+                toast.success("saveInforDoctor succeed");
                 // Cach viet truc tiep 
                 /*
                 dispatch({
@@ -309,23 +309,23 @@ export const createInforDoctorStart = (data) => {
                 */
             }
             else {
-                dispatch(createInforDoctorFail());
-                toast.error("createInforDoctorFail 1");
+                dispatch(saveInforDoctorFail());
+                toast.error("saveInforDoctorFail 1");
             }
         } catch (error) {
-            dispatch(createInforDoctorFail());
-            toast.error("createInforDoctorFail 2");
-            console.log('createInforDoctorFail error', error);
+            dispatch(saveInforDoctorFail());
+            toast.error("saveInforDoctorFail 2");
+            console.log('saveInforDoctorFail error', error);
         }
     }
 }
 
-export const createInforDoctorSuccess = () => ({
-    type: actionTypes.CREATE_INFOR_DOCTOR_SUCCESS,
+export const saveInforDoctorSuccess = () => ({
+    type: actionTypes.SAVE_INFOR_DOCTOR_SUCCESS,
 })
 
-export const createInforDoctorFail = () => ({
-    type: actionTypes.CREATE_INFOR_DOCTOR_FAIL,
+export const saveInforDoctorFail = () => ({
+    type: actionTypes.SAVE_INFOR_DOCTOR_FAIL,
 })
 
 

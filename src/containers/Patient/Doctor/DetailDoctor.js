@@ -9,6 +9,7 @@ import { LANGUAGES } from '../../../utils';
 
 
 
+
 class DetailDoctor extends Component {
 
     constructor(props) {

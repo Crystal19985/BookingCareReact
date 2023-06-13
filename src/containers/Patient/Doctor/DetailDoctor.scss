@@ -1,30 +1,29 @@
-.doctor-detail-container{
+.doctor-detail-container {
     height: 500px;
-    margin: 0 100px;
-    border: 1px solid red;
 
-    .intro-doctor{
+
+    .intro-doctor {
         display: flex;
-        border: 1px solid grey;
+        margin : 0 100px;
 
-        .content-left{
-            width: 20%;
-            background: center center no-repeat;
-            width: 120px;
-            height: 120px;
+        .content-left {
+            width        : 20%;
+            background   : center center no-repeat;
+            width        : 120px;
+            height       : 120px;
             border-radius: 50%;
-            margin: 10px 20px;
+            margin       : 10px 20px;
         }
 
-        .content-right{
-            width: 80%;
-            display: flex;
+        .content-right {
+            width         : 80%;
+            display       : flex;
             flex-direction: column;
-            padding-left: 10px;
+            padding-left  : 10px;
 
-            .up{
+            .up {
                 padding-top: 15px;
-                font-size: 20px;
+                font-size  : 20px;
                 font-weight: 600;
             }
 
@@ -33,10 +32,19 @@
             }
         }
     }
+
+    .detail-infor-doctor {
+        border          : 1px solid #cccccc;
+        padding         : 10px 50px;
+        background-color: #f9f9f9;
+
+        h3 {
+            font-size  : 17px;
+            font-weight: 550;
+        }
+
+        img {
+            width: 100%;
+        }
+    }
 }
-
-
-
-
-
-

@@ -36,8 +36,8 @@ const getAllDoctorsService = () => {
     return axios.get(`/api/get-all-doctors`);
 }// Method get, phia server để nhận được tham số req : dùng req.query.id
 
-const createInforDoctorService = (data) => {
-    return axios.post('/api/create-infor-doctor', data);
+const saveInforDoctorService = (data) => {
+    return axios.post(`/api/save-infor-doctor`, data);
 }
 
 const getDetailInforDoctor = (doctorId) => {
@@ -55,5 +55,5 @@ const getDetailInforDoctor = (doctorId) => {
 export {
     handleLoginApi, getAllUsersService, createNewUserService, deleteUserService,
     editUserService, getAllCodeService, getTopDoctorHomeService, getAllDoctorsService,
-    createInforDoctorService, getDetailInforDoctor
+    saveInforDoctorService, getDetailInforDoctor
 };
