@@ -14,7 +14,6 @@ class Doctor extends Component {
                 {this.props.isLoggedIn && <Header />}
                 <div className="system-container">
                     <div className="system-list">
-                        <div>DOCTOR</div>
                         <Switch>
                             <Route path="/doctor/manage-schedule" component={ManageSchedule} />
                         </Switch>

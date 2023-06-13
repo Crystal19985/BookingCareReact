@@ -330,6 +330,32 @@ export const saveInforDoctorFail = () => ({
 
 
 
+// FETCH ALL DOCTOR
+export const fetchAllScheduleTimes = (allcodeType) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService('TIME');
+            if (res && res.errCode === 0) {
+                // Cach viet truc tiep 
+                dispatch({
+                    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_SUCCESS,
+                    timeData: res.data
+                })
+            }
+            else {
+                dispatch({
+                    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAIL,
+                })
+            }
+        } catch (error) {
+            dispatch({
+                type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAIL,
+            })
+            console.log('FETCH_ALLCODE_SCHEDULE_TIME_FAIL error', error);
+        }
+    }
+}
+
 
 
 
