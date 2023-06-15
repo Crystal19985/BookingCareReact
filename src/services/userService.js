@@ -48,8 +48,9 @@ const saveBulkDrScheduleService = (data) => {
     return axios.post(`/api/bulk-create-schedule`, data);
 }
 
-
-
+const getScheduleDrByDateService = (doctorId, date) => {
+    return axios.get(`/api/get-schedule-doctor-by-date?docterId=${doctorId}&date=${date}`);
+}// Method get, phia server để nhận được tham số req : dùng req.query.id
 
 
 
@@ -58,5 +59,6 @@ const saveBulkDrScheduleService = (data) => {
 export {
     handleLoginApi, getAllUsersService, createNewUserService, deleteUserService,
     editUserService, getAllCodeService, getTopDoctorHomeService, getAllDoctorsService,
-    saveInforDoctorService, getDetailInforDoctor, saveBulkDrScheduleService
+    saveInforDoctorService, getDetailInforDoctor, saveBulkDrScheduleService,
+    getScheduleDrByDateService,
 };

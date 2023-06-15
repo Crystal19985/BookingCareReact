@@ -137,7 +137,6 @@ class ManageSchedule extends Component {
                 toast.error('selectedTime is invalid');
                 return;
             }
-
         }
 
         let respon = await saveBulkDrScheduleService({
@@ -145,9 +144,6 @@ class ManageSchedule extends Component {
             docterId: selectedDoctor.value,
             date: formatedDate,
         });
-
-        console.log('>>> respon', respon);
-        console.log('>>> result', result);
     }
 
     render() {
