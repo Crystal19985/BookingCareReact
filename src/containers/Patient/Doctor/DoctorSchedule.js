@@ -16,7 +16,8 @@ class DoctorSchedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allDays: []
+            allDays: [],
+            allAvailableTime: [],
         }
     }
 
@@ -30,13 +31,20 @@ class DoctorSchedule extends Component {
         }
     }
 
+    captitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     setStateAllDays = (language) => {
         let arrDate = [];
         for (let i = 0; i < 7; i++) {
             let obj = {};
 
-            if (language === LANGUAGES.VI)
-                obj.label = moment(new Date()).add(i, 'days').format('dddd - DD/MM');
+            if (language === LANGUAGES.VI) {
+                let string = moment(new Date()).add(i, 'days').format('dddd - DD/MM');
+                obj.label = this.captitalizeFirstLetter(string);
+            }
+
             else
                 obj.label = moment(new Date()).add(i, 'days').locale('en').format('ddd - DD/MM');
 
@@ -52,19 +60,22 @@ class DoctorSchedule extends Component {
 
 
     handleOnChangeScheduleSelect = async (event) => {
-        console.log('>>> check this.props.doctorIdFromParent', this.props.doctorIdFromParent);
         if (this.props.doctorIdFromParent && this.props.doctorIdFromParent !== -1) {
 
             let doctorId = this.props.doctorIdFromParent;
             let date = event.target.value;
-            console.log('>>> check date', date, '>>> check doctorId', doctorId);
             let res = await getScheduleDrByDateService(doctorId, date);
-            console.log('>>> check res', res)
+            if (res && res.errCode === 0) {
+                this.setState({
+                    allAvailableTime: res.data ? res.data : []
+                })
+            }
         }
     }
 
     render() {
-        let { allDays } = this.state;
+        let { allDays, allAvailableTime } = this.state;
+        let { language } = this.props;
         return (
             <div className='docter-schedule-container'>
                 <div className='all-schedule'>
@@ -81,12 +92,25 @@ class DoctorSchedule extends Component {
 
                 </div>
                 <div className='all-available-time'>
+                    <div className='text-calendar'>
+                        <span><i className='fas fa-calendar-alt'>Lịch Khám</i></span>
+                    </div>
+                    <div className='time-content'>
+                        {allAvailableTime && allAvailableTime.length > 0
+                            ?
+                            allAvailableTime.map((item, index) => {
+                                let timeDisplay = language === LANGUAGES.VI ?
+                                    item.timeTypeData.valueVi : item.timeTypeData.valueEn;
+                                return < button key={index}> {timeDisplay}</button>
+                            })
 
-                </div>
-                <div>
+                            :
+                            <div>Không có lịch hẹn khám</div>
+                        }
 
+                    </div>
                 </div>
-            </div>
+            </div >
         );
     }
 
